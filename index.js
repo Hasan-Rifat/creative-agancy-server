@@ -1,7 +1,11 @@
-const express = require("express");
-const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
-const cors = require("cors");
-require("dotenv").config();
+import cors from "cors";
+import express, { json } from "express";
+import { MongoClient, ObjectId, ServerApiVersion } from "mongodb";
+
+import * as dotenv from "dotenv";
+dotenv.config();
+
+// require("dotenv").config();
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -9,7 +13,7 @@ const port = process.env.PORT || 5000;
 // middleware
 
 app.use(cors());
-app.use(express.json());
+app.use(json());
 
 // mongodb
 
