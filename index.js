@@ -32,7 +32,7 @@ const run = async () => {
       .collection("allservices");
 
     // read all items
-    // http://localhost:5000/services
+    // https://creative-agancy-server.vercel.app/services
 
     app.get("/services", async (req, res) => {
       const result = await serviceCollection.find({}).toArray();
@@ -46,7 +46,7 @@ const run = async () => {
       res.send(result);
     });
     // create
-    // http://localhost:5000/service
+    // https://creative-agancy-server.vercel.app/service
     app.post("/service", async (req, res) => {
       const service = req.body;
       const result = await serviceCollection.insertOne(service);
@@ -54,7 +54,7 @@ const run = async () => {
     });
 
     // update
-    // http://localhost:5000/service/
+    // https://creative-agancy-server.vercel.app/service/
     app.put("/service/:id", async (req, res) => {
       const id = req.params.id;
       const data = req.body;
@@ -85,7 +85,7 @@ const run = async () => {
 run().catch(console.dir);
 
 app.get("/", (req, res) => {
-  res.send("hello world");
+  res.send("hello world...");
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}`));
