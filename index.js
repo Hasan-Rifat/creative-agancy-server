@@ -1,11 +1,11 @@
-import cors from "cors";
-import express, { json } from "express";
-import { MongoClient, ObjectId, ServerApiVersion } from "mongodb";
+const express = require("express");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
+const cors = require("cors");
+require("dotenv").config();
 
-import * as dotenv from "dotenv";
-dotenv.config();
+// payment
 
-// require("dotenv").config();
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -13,7 +13,7 @@ const port = process.env.PORT || 5000;
 // middleware
 
 app.use(cors());
-app.use(json());
+app.use(express.json());
 
 // mongodb
 
@@ -58,6 +58,24 @@ const run = async () => {
     // create
 
     // https://creative-agancy-server.onrender.com/service
+
+    // payment
+    app.post("/create-payment-intent", async (req, res) => {
+      const service = req.body;
+      const price = service.price;
+      const amount = price * 100;
+
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: amount,
+        currency: "usd",
+        payment_methods_types: ["card"],
+      });
+
+      res.send({
+        clientSecret: paymentIntent.client_secret,
+      });
+    });
+
     app.post("/service", async (req, res) => {
       const service = req.body;
       const result = await serviceCollection.insertOne(service);

@@ -1,11 +1,6 @@
 {
   "name": "server-side",
   "version": "1.0.0",
-  "main": "index.js",
-  "type": "module",
-  "engines": {
-    "node": "16.x"
-  },
   "scripts": {
     "start": "nodemon index.js",
     "start-dev": "nodemon index.js"
