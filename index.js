@@ -32,8 +32,16 @@ const run = async () => {
       .db("agency-services")
       .collection("allservices");
 
+    const bookingCollection = client
+      .db("agency-services")
+      .collection("booking");
+
+    const paymentCollection = client
+      .db("agency-services")
+      .collection("payment");
+
     // read all items
-    // https://creative-agancy-server.vercel.app/services
+    // https://creative-agancy-server.onrender.com/services
 
     app.get("/services", async (req, res) => {
       const result = await serviceCollection.find({}).toArray();
@@ -46,16 +54,30 @@ const run = async () => {
       const result = await serviceCollection.findOne(query);
       res.send(result);
     });
+
     // create
-    // https://creative-agancy-server.vercel.app/service
+
+    // https://creative-agancy-server.onrender.com/service
     app.post("/service", async (req, res) => {
       const service = req.body;
       const result = await serviceCollection.insertOne(service);
       res.send(result);
     });
 
+    app.post("/booking", async (req, res) => {
+      const booking = req.body;
+      const result = await bookingCollection.insertOne(booking);
+      res.send(result);
+    });
+
+    app.post("/payment", async (req, res) => {
+      const booking = req.body;
+      const result = await paymentCollection.insertOne(booking);
+      res.send(result);
+    });
+
     // update
-    // https://creative-agancy-server.vercel.app/service/
+    // https://creative-agancy-server.onrender.com/service/
     app.put("/service/:id", async (req, res) => {
       const id = req.params.id;
       const data = req.body;
