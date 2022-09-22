@@ -2,7 +2,7 @@
   "name": "server-side",
   "version": "1.0.0",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "node index.js",
     "start-dev": "nodemon index.js"
   },
   "keywords": [],
