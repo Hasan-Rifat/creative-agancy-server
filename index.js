@@ -8,8 +8,6 @@ const { connectToServer } = require("./utils/dbConnect");
 
 // payment
 
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -53,7 +51,7 @@ app.use("/api/v1/create-payment-intent", paymentMethod);
       .collection("payment");
 
     // read all items
-    // https://creative-agancy-server.onrender.com/services
+    // https://creative-agancy-server.vercel.app/api/v1/services
   } finally {
   }
 };
