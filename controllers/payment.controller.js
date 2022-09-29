@@ -1,6 +1,8 @@
+const { ObjectId } = require("mongodb");
 const { getDb } = require("../utils/dbConnect");
 require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+
 module.exports.paymentMethod = async (req, res) => {
   const service = req.body;
   const price = service.price;

@@ -1,6 +1,7 @@
 // order get
 const { ObjectId } = require("mongodb");
 const { getDb } = require("../utils/dbConnect");
+require("dotenv").config();
 
 module.exports.getOrder = async (req, res, next) => {
   const db = getDb();
@@ -29,13 +30,19 @@ module.exports.createOrder = async (req, res, next) => {
 module.exports.updateOrder = async (req, res, next) => {
   const db = getDb();
   const id = req.params.id;
-  const data = req.body;
+  const paymentData = req.body;
   const query = { _id: ObjectId(id) };
-  const options = { upsert: true };
-  const result = await db
-    .collection("order")
-    .updateOne(query, { $set: data }, options);
-  res.send(result);
+
+  const updateDoc = {
+    $set: {
+      paid: true,
+      paymentId: paymentData.paymentId,
+      orderId: paymentData.orderId,
+    },
+  };
+  const result = await db.collection("order").updateOne(query, updateDoc);
+  const updatePayment = await db.collection("payment").insertOne(paymentData);
+  res.send(updateDoc);
 };
 
 // order delete

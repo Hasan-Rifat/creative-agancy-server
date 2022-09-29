@@ -1,11 +1,12 @@
 const express = require("express");
 // const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const cors = require("cors");
+const { connectToServer } = require("./utils/dbConnect");
 const servicesRouter = require("./routers/v1/services.route");
 const oderRouter = require("./routers/v1/order.route");
 const paymentMethod = require("./routers/v1/payment.route");
-const { connectToServer } = require("./utils/dbConnect");
-
+const usersRoute = require("./routers/v1/users.route");
+const adminRoute = require("./routers/v1/admin.route");
 // payment
 
 const app = express();
@@ -29,34 +30,18 @@ connectToServer((error) => {
 });
 // services routes
 app.use("/api/v1/services", servicesRouter);
+
 //order routers
 app.use("/api/v1/order", oderRouter);
+
+//payment methods
 app.use("/api/v1/create-payment-intent", paymentMethod);
 
-// payment methods
+// user routes
+app.use("/api/v1/users", usersRoute);
 
-/* const run = async () => {
-  try {
-    await client.connect();
-    const serviceCollection = client
-      .db("agency-services")
-      .collection("allservices");
-
-    const bookingCollection = client
-      .db("agency-services")
-      .collection("booking");
-
-    const paymentCollection = client
-      .db("agency-services")
-      .collection("payment");
-
-    // read all items
-    // https://creative-agancy-server.vercel.app/api/v1/services
-  } finally {
-  }
-};
-
-run().catch(console.dir); */
+//admin routes
+app.use("/api/v1/admin", adminRoute);
 
 app.get("/", (req, res) => {
   res.send("hello world...");
