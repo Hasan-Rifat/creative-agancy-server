@@ -1,8 +1,14 @@
 const { getDb } = require("../utils/dbConnect");
 
+module.exports.getAdmin = async (req, res, next) => {
+  const db = getDb();
+  const email = req.params.email;
+  const filter = { email: email };
+  const result = await db.collection("users").findOne(filter);
+  res.send(result);
+};
 module.exports.makeAdmin = async (req, res, next) => {
   const db = getDb();
-
   const email = req.params.email;
   const filter = { email: email };
   const updateDoc = { $set: { role: "admin" } };

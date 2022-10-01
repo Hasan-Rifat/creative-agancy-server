@@ -1,8 +1,8 @@
 const express = require("express");
 const serviceController = require("../../controllers/services.controller");
 const router = express.Router();
-// url => http://localhost:5000/api/v1/services
-// url => http://localhost:5000/api/v1/services/id
+// url => https://creative-agancy-server.vercel.app/api/v1/services
+// url => https://creative-agancy-server.vercel.app/api/v1/services/id
 router
   .route("/")
   /**
