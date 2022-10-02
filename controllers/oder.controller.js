@@ -32,16 +32,23 @@ module.exports.updateOrder = async (req, res, next) => {
   const id = req.params.id;
   const paymentData = req.body;
   const query = { _id: ObjectId(id) };
-
+  const options = { upsert: true };
   const updateDoc = {
     $set: {
       paid: true,
       paymentId: paymentData.paymentId,
       orderId: paymentData.orderId,
+      title: paymentData.title,
+      description: paymentData.description,
+      price: paymentData.price,
+      image: paymentData.image,
+      email: paymentData.email,
+      orderId: paymentData._id,
     },
   };
-  const result = await db.collection("order").updateOne(query, updateDoc);
-  const updatePayment = await db.collection("payment").insertOne(paymentData);
+  const result = await db
+    .collection("order")
+    .updateOne(query, updateDoc, options);
   res.send(updateDoc);
 };
 
