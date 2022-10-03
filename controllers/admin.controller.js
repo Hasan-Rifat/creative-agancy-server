@@ -5,7 +5,8 @@ module.exports.getAdmin = async (req, res, next) => {
   const email = req.params.email;
   const filter = { email: email };
   const result = await db.collection("users").findOne(filter);
-  res.send(result);
+  const isAdmin = result.role === "admin";
+  res.send({ admin: isAdmin });
 };
 module.exports.makeAdmin = async (req, res, next) => {
   const db = getDb();

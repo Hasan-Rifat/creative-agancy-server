@@ -7,10 +7,8 @@ const order = require("../../controllers/oder.controller");
 
 router.route("/").get(order.getOrder).post(order.createOrder);
 
-router
-  .route("/:id")
-  .get(order.getSingleOrder)
-  .put(order.updateOrder)
-  .delete(order.deleteOrder);
+router.route("/:id").put(order.updateOrder).delete(order.deleteOrder);
+
+router.route("/:email").get(order.getSingleOrder).delete(order.deleteUserOrder);
 
 module.exports = router;

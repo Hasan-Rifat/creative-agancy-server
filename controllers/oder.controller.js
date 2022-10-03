@@ -13,9 +13,10 @@ module.exports.getOrder = async (req, res, next) => {
 
 module.exports.getSingleOrder = async (req, res, next) => {
   const db = getDb();
-  const id = req.params.id;
-  const query = { _id: ObjectId(id) };
-  const result = await db.collection("order").findOne(query);
+  const email = req.params.email;
+
+  console.log(req.params);
+  const result = await db.collection("order").find({ email: email }).toArray();
   res.send(result);
 };
 // order post
@@ -57,6 +58,24 @@ module.exports.deleteOrder = async (req, res, next) => {
   const db = getDb();
   const id = req.params.id;
   const query = { _id: ObjectId(id) };
+  const result = await db.collection("order").deleteOne(query);
+  res.send(result);
+};
+
+// single user all order
+module.exports.getUserOrder = async (req, res) => {
+  const db = getDb();
+  const { email } = req.body;
+  /* console.log(email);
+  const result = await db.collection("order").findOne({ email: email });
+  res.send(result); */
+  console.log(email);
+  res.json({ success: true });
+};
+module.exports.deleteUserOrder = async (req, res) => {
+  const db = getDb();
+  const email = req.params.email;
+  const query = { email: email };
   const result = await db.collection("order").deleteOne(query);
   res.send(result);
 };

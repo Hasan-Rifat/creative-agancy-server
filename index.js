@@ -8,6 +8,7 @@ const paymentMethod = require("./routers/v1/payment.route");
 const usersRoute = require("./routers/v1/users.route");
 const adminRoute = require("./routers/v1/admin.route");
 const checkout = require("./routers/v1/checkout.route");
+const review = require("./routers/v1/review.route");
 // payment
 
 const app = express();
@@ -46,6 +47,9 @@ app.use("/api/v1/admin", adminRoute);
 
 //checkout routes
 app.use("/api/v1/checkout", checkout);
+
+//review routes
+app.use("/api/v1/review", review);
 
 app.get("/", (req, res) => {
   res.send("hello world...");
